@@ -13,11 +13,11 @@
        procedure division.
            display "Inserisci numero 1: "
            accept num1.
+           display "Inserisci operazione (+, -, "
+           "*, /): "
+           accept operator.
            display "Inserisci numero 2: "
            accept num2.
-           display "Inserisci operazione (somma, sottrazione, "
-           "moltiplicazione, divisione): "
-           accept operator.
        
            perform calcola-riultato
                display "Il risultato è: ", result.
@@ -26,13 +26,13 @@
        
        calcola-riultato.
            evaluate operator
-               when "somma"
+               when "+"
                    compute result = num1 + num2
-               when "sottrazione"
+               when "-"
                    compute result = num1 - num2
-               when "moltiplicazione"
+               when "*"
                    compute result = num1 * num2
-               when "divisione"
+               when "/"
                    if num2 not = 0
                        compute result = num1 / num2
                    else
@@ -41,6 +41,7 @@
                    end-if
                when other
                    display "Operazione non riconosciuta"
+                   stop run
            end-evaluate.
        
        
