@@ -50,6 +50,25 @@
            if punteggio is not numeric then
                display "Non un numero!"
            end-if
+           if Eta > 18 then
+               set PuoVotare to true
+           else
+               set NonPuoVotare to true
+           end-if
+           display "Votare " SezionePuoVotare
+
+           display "Inserisci un singolo numero oppure X per uscire: "
+           accept NumeroTest
+           perform until not EUnNumero
+               evaluate true
+                  when Primo display "Primo!"
+                  when Dispari display "Dispari!"
+                  when Pari display "Pari!"
+                  when MinoreDi5 display "Minore di 5!"
+                  when other display "Defualt"
+               end-evaluate
+               accept NumeroTest
+           end-perform
            
        stop run.
        end program data-classification.
