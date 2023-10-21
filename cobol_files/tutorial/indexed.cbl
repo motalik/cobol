@@ -1,109 +1,105 @@
-       identification division.
-       PROGRAM-ID. "indexed".
-       date-written. sabato.
-       environment division.
-       input-output section.
-       file-control.
-           select CustomerFile assign to "customer.txt"
-               organization is indexed
-               access mode is random
-               record key is IDNum.
-       data division.
-       file section.
-       FD CustomerFile.
-       01 CustomerData.
-           02 IDNum pic 9(5).
-           02 FirstName pic x(15).
-           02 LastName pic x(15).
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. "INDEXED".
+       DATE-WRITTEN. SABATO.
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT CUSTOMERFILE ASSIGN TO "customer.txt"
+               ORGANIZATION IS INDEXED
+               ACCESS MODE IS RANDOM
+               RECORD KEY IS IDNUM.
+       DATA DIVISION.
+       FILE SECTION.
+       FD CUSTOMERFILE.
+       01 CUSTOMERDATA.
+           02 IDNUM PIC 9(5).
+           02 FIRSTNAME PIC X(15).
+           02 LASTNAME PIC X(15).
           
-       working-storage section.
-       01 Choice pic 9.
-       01 StayOpen pic x value 'Y'.
-       01 CustExists pic X.
+       WORKING-STORAGE SECTION.
+       01 CHOICE PIC 9.
+       01 STAYOPEN PIC X VALUE 'Y'.
+       01 CUSTEXISTS PIC X.
        
-       procedure division.
-       StartPara.
-           open i-o CustomerFile
-           perform until StayOpen='N'
-               display " "
-               display "CUSTOMER RECORDS"
-               display "1: Add Customer"
-               display "2: Delete Customer"
-               display "3: Update Customer"
-               display "4: Get Customer"
-               display "0: Quit"
-               display ": " with no advancing
-               accept Choice
-               evaluate Choice
-                   when 1 perform AddCust
-                   when 2 perform DeleteCust
-                   when 3 perform UpdateCust
-                   when 4 perform GetCust
-                   when other move 'N' to StayOpen
-               end-evaluate
-           end-perform.
-           close CustomerFile
-           stop run.
+       PROCEDURE DIVISION.
+       STARTPARA.
+           OPEN I-O CUSTOMERFILE
+           PERFORM UNTIL STAYOPEN = 'N'
+               DISPLAY " "
+               DISPLAY "CUSTOMER RECORDS"
+               DISPLAY "1: ADD CUSTOMER"
+               DISPLAY "2: DELETE CUSTOMER"
+               DISPLAY "3: UPDATE CUSTOMER"
+               DISPLAY "4: GET CUSTOMER"
+               DISPLAY "0: QUIT"
+               DISPLAY ": " WITH NO ADVANCING
+               ACCEPT CHOICE
+               EVALUATE CHOICE
+                   WHEN 1 PERFORM ADDCUST
+                   WHEN 2 PERFORM DELETECUST
+                   WHEN 3 PERFORM UPDATECUST
+                   WHEN 4 PERFORM GETCUST
+                   WHEN OTHER MOVE 'N' TO STAYOPEN
+               END-EVALUATE
+           END-PERFORM.
+           CLOSE CUSTOMERFILE
+           STOP RUN.
            
-       AddCust.
-           display " "
-           display "Enter ID : " with no advancing.
-           accept IDNum
-           display "Enter First Name : " with no advancing.
-           accept FirstName
-           display "Enter Last Name : " with no advancing.
-           accept LastName
-           display " "
-           write CustomerData
-               invalid key display "ID Taken"
-           end-write.
+       ADDCUST.
+           DISPLAY " "
+           DISPLAY "ENTER ID : " WITH NO ADVANCING.
+           ACCEPT IDNUM
+           DISPLAY "ENTER FIRST NAME : " WITH NO ADVANCING.
+           ACCEPT FIRSTNAME
+           DISPLAY "ENTER LAST NAME : " WITH NO ADVANCING.
+           ACCEPT LASTNAME
+           DISPLAY " "
+           WRITE CUSTOMERDATA
+               INVALID KEY DISPLAY "ID TAKEN"
+           END-WRITE.
        
-       DeleteCust.
-           display " "
-           display "Enter Customer ID to Delete : " with no advancing.
-           accept IDNum
-           delete CustomerFile
-               invalid key display "Key Doesn't Exist"
-           end-delete.
+       DELETECUST.
+           DISPLAY " "
+           DISPLAY "ENTER CUSTOMER ID TO DELETE : " WITH NO ADVANCING.
+           ACCEPT IDNUM
+           DELETE CUSTOMERFILE
+               INVALID KEY DISPLAY "KEY DOESN'T EXIST"
+           END-DELETE.
        
-       UpdateCust.
-           move 'Y' to CustExists
-           display " "
-           display "Enter ID to Update : " with no advancing
-           accept IDNum
-           read CustomerFile
-               invalid key move 'N' to CustExists
-           end-read.
-           if CustExists = 'N'
-               display "Customer Doesn't Exist"
-           else
-               display "Enter the New First Name : " with no advancing
-               accept FirstName
-               display "Enter the New Last Name : " with no advancing
-               accept LastName
-           end-if.
-           rewrite CustomerData
-               invalid key display "Customer Not Updated"
-           end-rewrite.
+       UPDATECUST.
+           MOVE 'Y' TO CUSTEXISTS
+           DISPLAY " "
+           DISPLAY "ENTER ID TO UPDATE : " WITH NO ADVANCING
+           ACCEPT IDNUM
+           READ CUSTOMERFILE
+               INVALID KEY MOVE 'N' TO CUSTEXISTS
+           END-READ.
+           IF CUSTEXISTS = 'N'
+               DISPLAY "CUSTOMER DOESN'T EXIST"
+           ELSE
+               DISPLAY "ENTER THE NEW FIRST NAME : " WITH NO ADVANCING
+               ACCEPT FIRSTNAME
+               DISPLAY "ENTER THE NEW LAST NAME : " WITH NO ADVANCING
+               ACCEPT LASTNAME
+           END-IF.
+           REWRITE CUSTOMERDATA
+               INVALID KEY DISPLAY "CUSTOMER NOT UPDATED"
+           END-REWRITE.
        
-       GetCust.
-           move 'Y' to CustExists
-           display " "
-           display "Enter Customer Id to Find : " with no advancing
-           accept IDNum
-           read CustomerFile
-               invalid key move 'N' to CustExists
-           end-read.
-           if CustExists='N'
-               display "Customer Doesn't Exist"
-           else
-               display "ID : " IDNum
-               display "First Name : " FirstName
-               display "Last Name : " LastName
-           end-if.
+       GETCUST.
+           MOVE 'Y' TO CUSTEXISTS
+           DISPLAY " "
+           DISPLAY "ENTER CUSTOMER ID TO FIND : " WITH NO ADVANCING
+           ACCEPT IDNUM
+           READ CUSTOMERFILE
+               INVALID KEY MOVE 'N' TO CUSTEXISTS
+           END-READ.
+           IF CUSTEXISTS = 'N'
+               DISPLAY "CUSTOMER DOESN'T EXIST"
+           ELSE
+               DISPLAY "ID : " IDNUM
+               DISPLAY "FIRST NAME : " FIRSTNAME
+               DISPLAY "LAST NAME : " LASTNAME
+           END-IF.
        
-       end program indexed.
-      *************************************** 
-
-
-
+       END PROGRAM INDEXED.
