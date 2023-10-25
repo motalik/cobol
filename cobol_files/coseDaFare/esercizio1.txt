@@ -1,0 +1,3 @@
+fare un screen input-output con 3 righe dove nella prima metti un numero
+nella seconda metti l'operatore (+-*/) e nella terza metti l'altro numero
+e cliccando invio ti da in display il valore calcolato
